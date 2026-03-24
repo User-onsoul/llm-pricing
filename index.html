@@ -109,17 +109,22 @@
     .search-bar input:focus { outline: none; border-color: var(--accent); }
     .search-bar input::placeholder { color: var(--text-muted); }
     .filters {
+      margin-bottom: 20px;
+    }
+    .filter-row {
       display: flex;
       gap: 6px;
-      margin-bottom: 20px;
       flex-wrap: wrap;
       align-items: center;
+      margin-bottom: 8px;
     }
+    .filter-row:last-child { margin-bottom: 0; }
     .filter-label {
       font-family: var(--font-mono);
       font-size: 10px;
       color: var(--text-muted);
       margin-right: 4px;
+      min-width: 32px;
     }
     .filter-btn {
       padding: 5px 12px;
@@ -267,30 +272,42 @@
   </div>
 
   <div class="filters">
-    <span class="filter-label">厂商:</span>
-    <button class="filter-btn active" data-filter="all">全部</button>
-    <button class="filter-btn" data-filter="OpenAI">OpenAI</button>
-    <button class="filter-btn" data-filter="Anthropic">Anthropic</button>
-    <button class="filter-btn" data-filter="Google">Google</button>
-    <button class="filter-btn" data-filter="DeepSeek">DeepSeek</button>
-    <button class="filter-btn" data-filter="字节">字节</button>
-    <button class="filter-btn" data-filter="阿里">阿里</button>
-    <button class="filter-btn" data-filter="百度">百度</button>
-    <button class="filter-btn" data-filter="月之暗面">月之暗面</button>
-    <button class="filter-btn" data-filter="智谱">智谱</button>
-    <button class="filter-btn" data-filter="MiniMax">MiniMax</button>
-    <button class="filter-btn" data-filter="xAI">xAI</button>
-    <button class="filter-btn" data-filter="Mistral">Mistral</button>
-    &nbsp;|&nbsp;
-    <span class="filter-label">类型:</span>
-    <button class="filter-btn type-btn active" data-type="all">全部</button>
-    <button class="filter-btn type-btn" data-type="chat">对话</button>
-    <button class="filter-btn type-btn" data-type="reasoning">推理</button>
-    <button class="filter-btn type-btn" data-type="vision">多模态</button>
-    <button class="filter-btn type-btn" data-type="embedding">嵌入</button>
-    <button class="filter-btn type-btn" data-type="image">图像</button>
-    <button class="filter-btn type-btn" data-type="video">视频</button>
-    <button class="filter-btn type-btn" data-type="audio">音频</button>
+    <div class="filter-row">
+      <span class="filter-label">厂商:</span>
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="OpenAI">OpenAI</button>
+      <button class="filter-btn" data-filter="Anthropic">Anthropic</button>
+      <button class="filter-btn" data-filter="Google">Google</button>
+      <button class="filter-btn" data-filter="DeepSeek">DeepSeek</button>
+      <button class="filter-btn" data-filter="字节">字节</button>
+      <button class="filter-btn" data-filter="阿里">阿里</button>
+      <button class="filter-btn" data-filter="百度">百度</button>
+      <button class="filter-btn" data-filter="月之暗面">月之暗面</button>
+      <button class="filter-btn" data-filter="智谱">智谱</button>
+      <button class="filter-btn" data-filter="MiniMax">MiniMax</button>
+      <button class="filter-btn" data-filter="xAI">xAI</button>
+      <button class="filter-btn" data-filter="Mistral">Mistral</button>
+      <button class="filter-btn" data-filter="Cohere">Cohere</button>
+      <button class="filter-btn" data-filter="ElevenLabs">ElevenLabs</button>
+      <button class="filter-btn" data-filter="讯飞">讯飞</button>
+      <button class="filter-btn" data-filter="微软">微软</button>
+      <button class="filter-btn" data-filter="Flux">Flux</button>
+      <button class="filter-btn" data-filter="Stability">Stability</button>
+      <button class="filter-btn" data-filter="Adobe">Adobe</button>
+      <button class="filter-btn" data-filter="Ideogram">Ideogram</button>
+      <button class="filter-btn" data-filter="Leonardo">Leonardo</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">类型:</span>
+      <button class="filter-btn type-btn active" data-type="all">全部</button>
+      <button class="filter-btn type-btn" data-type="chat">文本</button>
+      <button class="filter-btn type-btn" data-type="reasoning">推理</button>
+      <button class="filter-btn type-btn" data-type="vision">视觉</button>
+      <button class="filter-btn type-btn" data-type="embedding">嵌入</button>
+      <button class="filter-btn type-btn" data-type="image">图像</button>
+      <button class="filter-btn type-btn" data-type="video">视频</button>
+      <button class="filter-btn type-btn" data-type="audio">音频</button>
+    </div>
   </div>
 
   <div class="table-wrap">
