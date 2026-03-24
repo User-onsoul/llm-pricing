@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Backups
+data-backup-*.js
+
+# Logs
+*.log
+update.log
+
+# Environment
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/

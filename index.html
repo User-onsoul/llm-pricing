@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 大模型 API 价格汇总 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #06060e;
+      --bg-secondary: #0b0b16;
+      --bg-card: #10101e;
+      --bg-hover: #181828;
+      --text-primary: #e0e0f0;
+      --text-secondary: #8888a8;
+      --text-muted: #44445a;
+      --accent: #8b7cf8;
+      --accent-dim: rgba(139,124,248,0.15);
+      --green: #00d4aa;
+      --green-dim: rgba(0,212,170,0.12);
+      --orange: #ffb347;
+      --orange-dim: rgba(255,179,71,0.12);
+      --red: #ff6b7a;
+      --border: #1a1a2e;
+      --border-light: #252540;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 380px;
+      background: radial-gradient(ellipse 70% 50% at 50% -5%, rgba(139,124,248,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .header h1 span {
+      background: linear-gradient(135deg, #8b7cf8, #00d4aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .badge-tag {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .search-bar {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    .search-bar input {
+      width: 100%;
+      max-width: 360px;
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      transition: border-color 0.2s;
+    }
+    .search-bar input:focus { outline: none; border-color: var(--accent); }
+    .search-bar input::placeholder { color: var(--text-muted); }
+    .filters {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 5px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .refresh-btn.loading { opacity: 0.6; pointer-events: none; }
+    .refresh-btn .refresh-icon { font-size: 14px; }
+    .refresh-btn.loading .refresh-icon { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .update-info {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .update-info .dot { color: var(--green); }
+    .update-info.error .dot { color: var(--red); }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 950px; }
+    thead { background: var(--bg-card); position: sticky; top: 0; z-index: 10; }
+    th {
+      padding: 13px 14px;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    th:hover { color: var(--accent); }
+    th.sorted { color: var(--accent); }
+    td {
+      padding: 12px 14px;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-hover); }
+    tr.hidden { display: none; }
+    .model-cell strong { font-weight: 600; display: block; }
+    .model-cell .sub { font-size: 10px; color: var(--text-muted); font-weight: 400; }
+    .price-cell { font-family: var(--font-mono); font-size: 12px; white-space: nowrap; }
+    .price-free, .price-low { color: var(--green); }
+    .price-mid { color: var(--orange); }
+    .price-high { color: var(--red); }
+    .price-na { color: var(--text-muted); }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-chat { background: var(--accent-dim); color: var(--accent); }
+    .badge-reasoning { background: var(--orange-dim); color: var(--orange); }
+    .badge-vision { background: rgba(100,200,255,0.1); color: #64c8ff; }
+    .badge-embedding { background: var(--green-dim); color: var(--green); }
+    .badge-image { background: rgba(255,107,122,0.1); color: var(--red); }
+    .badge-free { background: var(--green-dim); color: var(--green); }
+    .context-cell { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+    .note-cell { font-size: 10px; color: var(--text-muted); max-width: 180px; line-height: 1.4; }
+    .bar-wrap { display: flex; align-items: center; gap: 8px; min-width: 130px; }
+    .bar-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 2px; }
+    .bar-fill.g { background: var(--green); }
+    .bar-fill.o { background: var(--orange); }
+    .bar-fill.r { background: var(--red); }
+    .bar-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); min-width: 24px; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 2;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .highlight td { background: rgba(139,124,248,0.05); }
+    @media (max-width: 700px) {
+      .header h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1><span>LLM</span> 大模型 API 价格汇总</h1>
+    <p>OpenAI · Anthropic · Google · DeepSeek · 字节豆包 · 阿里通义 · 百度文心 · 月之暗面 · 智谱GLM · MiniMax · xAI · Mistral</p>
+    <div class="badge-tag" id="lastUpdated">📅 更新于 2026-03-24 · 价格来源：各厂商官方定价</div>
+  </div>
+
+  <div class="action-bar">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="搜索模型名称或厂商...">
+    </div>
+    <button class="refresh-btn" id="refreshBtn" title="获取最新价格数据">
+      <span class="refresh-icon">↻</span>
+      <span class="refresh-text">刷新数据</span>
+    </button>
+  </div>
+
+  <div class="filters">
+    <span class="filter-label">厂商:</span>
+    <button class="filter-btn active" data-filter="all">全部</button>
+    <button class="filter-btn" data-filter="OpenAI">OpenAI</button>
+    <button class="filter-btn" data-filter="Anthropic">Anthropic</button>
+    <button class="filter-btn" data-filter="Google">Google</button>
+    <button class="filter-btn" data-filter="DeepSeek">DeepSeek</button>
+    <button class="filter-btn" data-filter="字节">字节</button>
+    <button class="filter-btn" data-filter="阿里">阿里</button>
+    <button class="filter-btn" data-filter="百度">百度</button>
+    <button class="filter-btn" data-filter="月之暗面">月之暗面</button>
+    <button class="filter-btn" data-filter="智谱">智谱</button>
+    <button class="filter-btn" data-filter="MiniMax">MiniMax</button>
+    <button class="filter-btn" data-filter="xAI">xAI</button>
+    <button class="filter-btn" data-filter="Mistral">Mistral</button>
+    &nbsp;|&nbsp;
+    <span class="filter-label">类型:</span>
+    <button class="filter-btn type-btn active" data-type="all">全部</button>
+    <button class="filter-btn type-btn" data-type="chat">对话</button>
+    <button class="filter-btn type-btn" data-type="reasoning">推理</button>
+    <button class="filter-btn type-btn" data-type="vision">多模态</button>
+    <button class="filter-btn type-btn" data-type="embedding">嵌入</button>
+    <button class="filter-btn type-btn" data-type="image">图像</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>厂商</th>
+          <th>模型名称</th>
+          <th>类型</th>
+          <th>输入 $/1M tokens</th>
+          <th>价格可视化</th>
+          <th>输出 $/1M tokens</th>
+          <th>上下文</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p>价格数据来源于各厂商官方 API 定价页（2026年3月）</p>
+    <p>实际价格可能因用量、地区、汇率不同而有所差异 · 推荐 <a href="https://llmpricecalculator.com" target="_blank">LLM Price Calculator</a> 进行实时对比</p>
+  </div>
+</div>
+
+<script src="data.js"></script>
+</body>
+</html>
