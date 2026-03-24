@@ -109,6 +109,47 @@ const DATA = [
   { provider:'微软', model:'Azure TTS (神经)', type:'audio', input:16.0, output:null, context:'$/1M字符', note:'Azure 神经语音' },
   // 海螺音频
   { provider:'字节', model:'Seaweed-音频生成', type:'audio', input:0.20, output:null, context:'$/秒', note:'文生音频/音效生成' },
+
+  // ============ 图像生成模型 ============
+  // OpenAI
+  { provider:'OpenAI', model:'DALL-E 3 (标准)', type:'image', input:0.04, output:null, context:'$/张', note:'标准质量，1024x1024' },
+  { provider:'OpenAI', model:'DALL-E 3 (高清)', type:'image', input:0.08, output:null, context:'$/张', note:'HD高清质量' },
+  { provider:'OpenAI', model:'DALL-E 2', type:'image', input:0.02, output:null, context:'$/张', note:'可一次生成10张图' },
+  // Midjourney
+  { provider:'Midjourney', model:'Midjourney v6 (订阅)', type:'image', input:10.0, output:null, context:'$/月', note:'Basic计划，约200张图/月' },
+  { provider:'Midjourney', model:'Midjourney v6 (标准)', type:'image', input:30.0, output:null, context:'$/月', note:'Standard计划，无限生成' },
+  { provider:'Midjourney', model:'Midjourney v6 (专业)', type:'image', input:60.0, output:null, context:'$/月', note:'Pro计划，快3倍' },
+  { provider:'Midjourney', model:'Midjourney API (三方)', type:'image', input:0.05, output:null, context:'$/张', note:'第三方平台API，约$0.05/张' },
+  // Stable Diffusion
+  { provider:'Stability AI', model:'Stable Diffusion 3 (API)', type:'image', input:0.003, output:null, context:'$/张', note:'SD3 Medium，按张计费' },
+  { provider:'Stability AI', model:'Stable Diffusion XL', type:'image', input:0, output:null, context:'免费', note:'开源免费，自部署' },
+  { provider:'Stability AI', model:'Stable Diffusion 3 (开源)', type:'image', input:0, output:null, context:'免费', note:'SD3 完全开源免费' },
+  // Adobe
+  { provider:'Adobe', model:'Firefly 3 (标准)', type:'image', input:4.0, output:null, context:'$/100张', note:'100 credits/月起' },
+  { provider:'Adobe', model:'Firefly 3 (创意)', type:'image', input:14.99, output:null, context:'$/月', note:'月度1000 credits' },
+  // Flux (Black Forest Labs)
+  { provider:'Flux', model:'Flux Pro (API)', type:'image', input:0.05, output:null, context:'$/张', note:'Black Forest Labs旗舰图像模型' },
+  { provider:'Flux', model:'Flux Dev (API)', type:'image', input:0.02, output:null, context:'$/张', note:'开发者版' },
+  { provider:'Flux', model:'Flux Schnell (API)', type:'image', input:0.003, output:null, context:'$/张', note:'极速版，1-4步生成' },
+  { provider:'Flux', model:'Flux (开源)', type:'image', input:0, output:null, context:'免费', note:'Flux 开源版本可自部署' },
+  // 字节即梦
+  { provider:'字节', model:'即梦 2.0 (标准)', type:'image', input:0.10, output:null, context:'$/张', note:'国内版DALL-E，支持中文' },
+  { provider:'字节', model:'即梦 2.0 Pro', type:'image', input:0.30, output:null, context:'$/张', note:'高清图像生成' },
+  // 通义万相
+  { provider:'阿里', model:'通义万相 Wan2.1', type:'image', input:0, output:null, context:'免费', note:'阿里开源图像模型' },
+  { provider:'阿里', model:'通义万相 (API)', type:'image', input:0.02, output:null, context:'$/张', note:'通过阿里云API调用' },
+  // 百度文心
+  { provider:'百度', model:'文心一格', type:'image', input:0.05, output:null, context:'$/张', note:'百度文生图，支持多种风格' },
+  // 智谱 Cogview
+  { provider:'智谱', model:'Cogview 3', type:'image', input:0.01, output:null, context:'$/张', note:'智谱图像生成模型' },
+  // 海螺AI
+  { provider:'MiniMax', model:'MiniMax Image-01', type:'image', input:0.02, output:null, context:'$/张', note:'MiniMax图像生成' },
+  // Ideogram
+  { provider:'Ideogram', model:'Ideogram 2.0', type:'image', input:0.01, output:null, context:'$/张', note:'文字生成能力强' },
+  // Leonardo AI
+  { provider:'Leonardo.ai', model:'Leonardo Phoenix', type:'image', input:0.006, output:null, context:'$/张', note:'约0.6分/张，每日150张免费' },
+  // 堆友 (阿里)
+  { provider:'阿里', model:'堆友 AI', type:'image', input:0, output:null, context:'免费', note:'阿里妈妈设计师工具，免费' },
 ];
 
 const MAX_P = 150;
