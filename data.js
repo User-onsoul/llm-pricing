@@ -1,4 +1,5 @@
 const DATA = [
+  // ============ 文本对话模型 ============
   // OpenAI
   { provider:'OpenAI', model:'GPT-4.5', type:'chat', input:75, output:150, context:'200K', note:'非推理模型，主打高情商对话，2025年2月发布' },
   { provider:'OpenAI', model:'GPT-4o (2025-03)', type:'chat', input:2.5, output:10, context:'128K', note:'多模态旗舰，支持文本/语音/图像' },
@@ -69,6 +70,45 @@ const DATA = [
   { provider:'Cohere', model:'Command R+', type:'chat', input:3.0, output:15, context:'128K', note:'RAG优化模型' },
   { provider:'Cohere', model:'Command R', type:'chat', input:0.5, output:1.5, context:'128K', note:'RAG优化轻量版' },
   { provider:'Cohere', model:'Embed-v3.0', type:'embedding', input:0.05, output:null, context:'4K', note:'最新嵌入模型' },
+
+  // ============ 视频生成模型 ============
+  // OpenAI
+  { provider:'OpenAI', model:'Sora 2', type:'video', input:0.10, output:null, context:'20s/次', note:'文生视频，$0.10/秒，按秒计费' },
+  // Runway
+  { provider:'Runway', model:'Gen-3 Alpha Turbo', type:'video', input:0.05, output:null, context:'5 credits/s', note:'$0.01/credit × 5 credits/秒' },
+  { provider:'Runway', model:'Gen-3 Alpha', type:'video', input:0.15, output:null, context:'5 credits/s', note:'标准版，比Turbo更慢但质量更高' },
+  // MiniMax
+  { provider:'MiniMax', model:'abab-video-1', type:'video', input:0.05, output:null, context:'6s/次', note:'最高支持6秒，1280x720@25fps' },
+  // 海螺 AI（字节）
+  { provider:'字节', model:'Seaweed-文生视频', type:'video', input:0.10, output:null, context:'5s/次', note:'即梦/Seaweed视频生成API' },
+  // 智谱
+  { provider:'智谱', model:'CogVideoX', type:'video', input:0.02, output:null, context:'6s/次', note:'开源视频生成模型' },
+  // 通义
+  { provider:'阿里', model:'Qwen-Video-72B', type:'video', input:0.50, output:null, context:'6s/次', note:'通义千问视频生成' },
+  // Pixverse
+  { provider:'Pixverse', model:'PixVerse V3', type:'video', input:0.03, output:null, context:'4s/次', note:'国产视频生成，支持多种风格' },
+
+  // ============ 音频模型 ============
+  // OpenAI 语音
+  { provider:'OpenAI', model:'Whisper (STT)', type:'audio', input:0.006, output:null, context:'$/分钟', note:'语音转文字，$0.006/分钟' },
+  { provider:'OpenAI', model:'TTS-1 (HD)', type:'audio', input:15.0, output:null, context:'$/1M字符', note:'文字转语音，$15/百万字符' },
+  { provider:'OpenAI', model:'TTS-1 (标准)', type:'audio', input:3.0, output:null, context:'$/1M字符', note:'TTS标准版，$3/百万字符' },
+  // Eleven Labs
+  { provider:'ElevenLabs', model:'Eleven Turbo v2', type:'audio', input:0.30, output:null, context:'$/1K字符', note:'超低延迟语音合成' },
+  { provider:'ElevenLabs', model:'Eleven Multilingual v2', type:'audio', input:0.60, output:null, context:'$/1K字符', note:'多语言语音合成，专业版' },
+  // 字节豆包
+  { provider:'字节', model:'Doubao-TTS (极速)', type:'audio', input:0.15, output:null, context:'$/1K字符', note:'火山引擎TTS，极速版' },
+  { provider:'字节', model:'Doubao-TTS (基础)', type:'audio', input:0.05, output:null, context:'$/1K字符', note:'火山引擎TTS，基础版' },
+  // 阿里
+  { provider:'阿里', model:'CosyVoice (开源)', type:'audio', input:0, output:null, context:'免费', note:'阿里开源语音合成，自部署免费' },
+  // 海螺AI
+  { provider:'MiniMax', model:'Speech-02 TTS', type:'audio', input:1.0, output:null, context:'$/1K字符', note:'MiniMax 高质量语音合成' },
+  // 讯飞
+  { provider:'讯飞', model:'讯飞听见 TTS', type:'audio', input:0.50, output:null, context:'$/1K字符', note:'讯飞语音合成API' },
+  // 微软 Azure
+  { provider:'微软', model:'Azure TTS (神经)', type:'audio', input:16.0, output:null, context:'$/1M字符', note:'Azure 神经语音' },
+  // 海螺音频
+  { provider:'字节', model:'Seaweed-音频生成', type:'audio', input:0.20, output:null, context:'$/秒', note:'文生音频/音效生成' },
 ];
 
 const MAX_P = 150;
@@ -99,8 +139,8 @@ function barWidth(v) {
   return Math.min((v / MAX_P) * 100, 100);
 }
 
-const typeLabel = { chat:'对话', reasoning:'推理', vision:'多模态', embedding:'嵌入', image:'图像' };
-const typeBadge = { chat:'badge-chat', reasoning:'badge-reasoning', vision:'badge-vision', embedding:'badge-embedding', image:'badge-image' };
+const typeLabel = { chat:'文本', reasoning:'推理', vision:'视觉', embedding:'嵌入', image:'图像', video:'视频', audio:'音频' };
+const typeBadge = { chat:'badge-chat', reasoning:'badge-reasoning', vision:'badge-vision', embedding:'badge-embedding', image:'badge-image', video:'badge-video', audio:'badge-audio' };
 
 function getBarLabel(v) {
   if (!v) return '';
